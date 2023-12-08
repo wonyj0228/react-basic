@@ -5,15 +5,13 @@
   </body>
   <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-  <!-- Babel : JSX로 작성한 코드를 REACT가 이해할 수 있게 컴파일해줌 -->
+  <!-- Babel : JSX로 작성한 코드를 브라우저가 이해할 수 있는 React library를 사용한 언어로 컴파일해줌 -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
     // javascript로 html을 생성해서 ReactJS가 내용을 HTML로 번역시키는 것 = React의 파워
     const root = document.getElementById('root');
-
-    // 컴포넌트의 이름은 첫글자가 반드시 대문자여야 함
-    // JSX와 React는 만약 소문자면 HTML 태그로 생각할 것임
+    // 만들어둔 component를 function으로 return 하여 다른 function (component)에서 사용할 수 있게 만듬
     const Title = () => (
       <h3 id="title" onMouseEnter={() => console.log('mouse enter')}>
         Hello I'm a title
@@ -22,42 +20,19 @@
     const Button = () => (
       <button
         style={{ backgroundColor: 'tomato' }}
-        onClick={() => console.log("I'm clicked")}
+        onClick={() => console.log('im clicked')}
       >
         Click me
       </button>
     );
-
+    // 컴포넌트의 첫 글자는 반드시 대문자
+    // 소문자면 React랑 JSX는 HTML 태그라고 생각함
     const Container = () => (
       <div>
         <Title />
         <Button />
       </div>
     );
-
     ReactDOM.render(<Container />, root);
-
-    /*
-    // Old Way
-    const h3 = React.createElement(
-      'h3',
-      {
-        style: { color: 'red' },
-        onMouseEnter: () => console.log('MOUSE ENTER'),
-        // Element가져와서 eventListener 등록하고, 어떤 function 할지 연결
-        // => Component를 JS로 만들고 property에 on+EventName으로 한번에 해결
-      },
-      "Hello, I'm title"
-    );
-    const btn = React.createElement(
-      'button',
-      {
-        onClick: () => console.log('IM CLICKED'),
-      },
-      'Click Me'
-    );
-    const container = React.createElement('div', null, [h3, btn]);
-    ReactDOM.render(container, root);
-    */
   </script>
 </html>

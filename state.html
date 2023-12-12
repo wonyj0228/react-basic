@@ -10,51 +10,48 @@
 
   <script type="text/babel">
     const root = document.getElementById('root');
-
     const App = () => {
-      const [counter, setCounter] = React.useState(0);
+      const [count, setCount] = React.useState(0); // React.useState(초기값) = [data, setData]
+      // useState의 state를 변경하는 함수를 사용하면 state가 변경될 경우 render를 자동으로 발생시킨다.
+      // state가 바뀔때 state가 포함된 컴포넌트 자체를 새로 refresh한다고 볼 수 있음. => App component
+
+      // 1. 컴포넌트 내에 state가 여러개 있을 수 있음
+      // 2. state변수명과 setState함수명은 다른 state와 겹쳐선 안됨
 
       const onClick = () => {
-        // setCounter(counter + 1);
-        // 현재 state값을 매개변수로 받아서 계산
-        // state 변수를 가져와서 직접 계산 하는 것 보다 더 안정적임
-        setCounter((current) => current + 1);
+        // setCount(count + 1); // 이 방법은 state의 값을 새롭게 정의할 때 사용하는 방법에 가까움
+        // 아래 코드와 동일하게 현재 state의 값을 변경해줌. 하지만 state의 값은 다른곳에서도 변경할 가능성이 있음.
+        // setState의 매개변수는 react가 보장하는 확실한 현재 state의 값임. 더 안전.
+        setCount((cur) => cur + 1);
       };
 
       return (
         <div>
-          <h3>Total Clicks : {counter}</h3>
+          <h3>Total clicks : {count}</h3>
           <button onClick={onClick}>Click me</button>
         </div>
       );
     };
 
     ReactDOM.render(<App />, root);
-    /*
-    // Old Way
-    const root = document.getElementById('root');
 
-    // 데이터가 변경될 때 마다 UI를 렌더링 해줘야 함
-    // Re-Rendering
-    let counter = 0;
+    // ******state 없이 ReRendering을 수동으로 발생시킴******
 
-    function countUp() {
-      counter++;
-      reRender();
-    }
-
-    function reRender() {
-      ReactDOM.render(<Container />, root);
-    }
-
-    const Container = () => (
-      <div>
-        <h3>Total Clicks : {counter}</h3>
-        <button onClick={countUp}>Click me</button>
-      </div>
-    );
-
-    reRender();
-    */
+    // const root = document.getElementById('root');
+    // let counter = 0; // {} 중괄호를 이용해 jsx코드로 컴포넌트 내부에 변수를 위치시킬 수 있음
+    // function countUp() {
+    //   counter += 1; // 여기까지 코드 작성했을 땐 counter는 올라갔지만 UI 새로고침이 안됨
+    //   render(); // 값이 바뀔 때마다 render를 발생시켜줘야 함 => ReactJS 는 바닐라와 다르게 변경된 부분만 확인하고 그 부분만 수정함(ReactDOM)
+    // }
+    // function render() {
+    //   ReactDOM.render(<App />, root);
+    // }
+    // const App = () => (
+    //   <div>
+    //     <h3>Total clicks : {counter}</h3>
+    //     <button onClick={countUp}>Click me</button>
+    //   </div>
+    // );
+    // render();
   </script>
 </html>

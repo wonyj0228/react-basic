@@ -18,6 +18,9 @@
       const onChange = (e) => {
         setAmount(e.target.value);
       };
+      const onFocus = (e) => {
+        e.target.select();
+      };
       const reset = () => setAmount(0);
       const onFlip = () => {
         reset();
@@ -29,14 +32,15 @@
       // 2. class : className
       return (
         <div>
+          <h3>{inverted ? 'Hours to Minutes' : 'Minutes to Hours'}</h3>
           <div>
             <label htmlFor="minutes">Minutes</label>
             <input
               value={inverted ? amount * 60 : amount}
               id="minutes"
-              placeholder="Minutes"
               type="number"
               onChange={onChange}
+              onFocus={onFocus}
               disabled={inverted}
             />
           </div>
@@ -45,20 +49,67 @@
             <input
               value={inverted ? amount : Math.round(amount / 60)}
               id="hours"
-              placeholder="Hours"
               type="number"
               onChange={onChange}
+              onFocus={onFocus}
               disabled={!inverted}
             />
           </div>
           <button onClick={reset}>Reset</button>
-          <button onClick={onFlip}>{inverted ? 'Turn back' : 'Invert'}</button>
+          <button onClick={onFlip}>
+            {inverted ? 'To Hours' : 'To Minutes'}
+          </button>
         </div>
       );
     };
 
     const KmToMiles = () => {
-      return <h3>KM 2 M</h3>;
+      const [length, setLength] = React.useState(0);
+      const [inverted, setInverted] = React.useState(false);
+
+      const onChange = (e) => {
+        setLength(e.target.value);
+      };
+      const onFocus = (e) => {
+        e.target.select();
+      };
+      const reset = () => {
+        setLength(0);
+      };
+      const onFlip = () => {
+        setInverted((cur) => !cur);
+        reset();
+      };
+
+      return (
+        <div>
+          <h3>{inverted ? 'Miles to KM' : 'KM to Miles'}</h3>
+          <div>
+            <label htmlFor="km">Km</label>
+            <input
+              id="km"
+              type="number"
+              disabled={inverted}
+              onChange={onChange}
+              onFocus={onFocus}
+              value={inverted ? (length * 1.609).toFixed(2) : length}
+            />
+          </div>
+          <div>
+            <label htmlFor="miles">Miles</label>
+            <input
+              id="miles"
+              type="number"
+              disabled={!inverted}
+              onChange={onChange}
+              onFocus={onFocus}
+              value={inverted ? length : (length / 1.609).toFixed(2)}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={onFlip}>{inverted ? 'To Miles' : 'To Km'}</button>
+        </div>
+      );
     };
 
     const App = () => {
@@ -72,7 +123,7 @@
         <div>
           <h1>Super Converter</h1>
           <select value={index} onChange={onSelect}>
-            <option value="xx">Select your units </option>
+            <option value="xx">Select your units</option>
             <option value="0">Minutes & Hours</option>
             <option value="1">Km & Miles</option>
           </select>

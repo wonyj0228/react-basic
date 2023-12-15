@@ -22,7 +22,7 @@
     // 5. 삼항연산자를 이용해 style 조건부 지정도 가능함
     // 6. props에 String, boolean 등 포함될 수 있고, Function도 가능함
 
-    // JS는 정의되지 않은 변수에 관한 기본값을 줄 수 있음(fontsize)
+    // JS는 정의되지 않은 변수에 관한 기본값을 줄 수 있음(undefined일때만. null, "" 등 undefined가 아님) => ES6문법
     function Btn({ text, onClick, fontSize = 12 }) {
       return (
         <button
